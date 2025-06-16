@@ -26,7 +26,6 @@ namespace Utils {
         if (!s.empty())
             Val.push_back(s);
         return Val;
-<<<<<<< HEAD
     }
 
     inline std::string ToLower(const std::string& str) {
@@ -56,9 +55,7 @@ namespace Utils {
             return { result, returnCode };
         }
     #endif
-}
-=======
-    };
+
     inline std::string ExpandEnvVars(const std::string& input) {
         std::string result;
         std::regex envPattern(R"(%([^%]+)%|\$([A-Za-z_][A-Za-z0-9_]*)|\$\{([^}]+)\})");
@@ -146,4 +143,3 @@ namespace Utils {
     }
 
 };
->>>>>>> 676084f283775a11aaa5310759deec533b0035c7
