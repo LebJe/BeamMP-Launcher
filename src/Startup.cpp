@@ -84,7 +84,7 @@ std::string GetVer() {
     return "2.4";
 }
 std::string GetPatch() {
-    return ".0";
+    return ".1";
 }
 
 std::string GetEP(const char* P) {
@@ -341,7 +341,7 @@ void PreGame(const std::string& GamePath) {
 
         std::string Target(GetGamePath() + "mods/unpacked/beammp");
 
-        if (fs::is_directory(Target)) {
+        if (fs::is_directory(Target) && !fs::is_directory(Target + "/.git")) {
             fs::remove_all(Target);
         }
     }

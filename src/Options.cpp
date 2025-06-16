@@ -97,6 +97,12 @@ void InitOptions(int argc, const char *argv[], Options &options) {
         } else if (argument == "--wine") {
             options.wine_executable = argv[i + 1];
         #endif
+        } else if (argument == "--user-path") {
+            if (i + 1 >= argc) {
+                error("You must specify a path after the `--user-path` argument");
+            }
+            options.user_path = argv[i + 1];
+            i++;
         } else if (argument == "--" || argument == "--game") {
             options.game_arguments = &argv[i + 1];
             options.game_arguments_length = argc - i - 1;
@@ -118,6 +124,7 @@ void InitOptions(int argc, const char *argv[], Options &options) {
                 "\t--wine <path>            Path to the wine executable, by default the wine executable of CrossOver is used.\n"
                 "\tWARNING: The bottle-path and bottle options cannot be used at the same time.\n"
                 #endif
+                "\t--user-path <path>   Path to BeamNG's User Path\n"
                 "\t--game <args...>     Passes ALL following arguments to the game, see also `--`\n"
                 << std::flush;
             exit(0);
