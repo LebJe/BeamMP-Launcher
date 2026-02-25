@@ -86,7 +86,17 @@ void InitOptions(int argc, const char *argv[], Options &options) {
             options.no_download = true;
             options.no_launch = true;
             options.no_update = true;
-        } else if (argument == "--user-path") {
+        }
+        #if defined(__APPLE__)
+        else if (argument == "--install-path") {
+            if (i + 1 >= argc) {
+                error("You must specify a path after the `--install-path` argument");
+            }
+            options.install_path = argv[i + 1];
+            i++;
+        }
+        #endif
+        else if (argument == "--user-path") {
             if (i + 1 >= argc) {
                 error("You must specify a path after the `--user-path` argument");
             }
@@ -108,6 +118,9 @@ void InitOptions(int argc, const char *argv[], Options &options) {
                 "\t--no-launch          Skip launching the game (you must launch the game manually)\n"
                 "\t--dev                Developer mode, same as --verbose --no-download --no-launch --no-update\n"
                 "\t--user-path <path>   Path to BeamNG's User Path\n"
+                #if defined(__APPLE__)
+                "\t--install-path <path>   Path to BeamNG installation, e.x. /Users/YourName/Library/Application Support/Steam/steamapps/common/BeamNG.drive\n"
+                #endif
                 "\t--game <args...>     Passes ALL following arguments to the game, see also `--`\n"
                 << std::flush;
             exit(0);

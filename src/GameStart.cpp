@@ -148,6 +148,14 @@ std::filesystem::path GetGamePath() {
     struct passwd* pw = getpwuid(getuid());
     std::string homeDir = pw->pw_dir;
 
+    if (options.user_path && std::filesystem::exists(options.user_path)) {
+        std::filesystem::path Path = options.user_path;
+        return Path;   
+    }  else {
+        warn("Invalid or non-existent path (" + std::string(options.user_path) + ") specified using --user-path, using default");
+    }
+    
+    
     std::string Path = homeDir + "/Library/Application Support/BeamNG/BeamNG.drive/";
     std::string Ver = CheckVer(GetGameDir());
     Ver = Ver.substr(0, Ver.find('.', Ver.find('.') + 1));

@@ -5,6 +5,7 @@
 */
 
 
+#include "Options.h"
 #include <filesystem>
 #include "Utils.h"
 #if defined(_WIN32)
@@ -279,24 +280,27 @@ void LegitimacyCheck() {
         return;
     }
 #elif defined(__APPLE__)
-    // On macOS, ask the user to provide the game directory path
-    info("Please enter the path to your BeamNG.drive installation directory:");
-    info("Example: /Users/YourName/Library/Application Support/Steam/steamapps/common/BeamNG.drive");
-    std::cout << "Game directory path: ";
+    // On macOS, the user must provide the game directory path via CLI arg.
     
-    std::string userPath;
-    std::getline(std::cin, userPath);
+    std::string installPath;
     
-    // Remove trailing slash if present
-    if (!userPath.empty() && (userPath.back() == '/' || userPath.back() == '\\')) {
-        userPath.pop_back();
+    if (options.install_path) {
+        installPath = options.install_path;
+    } else {
+        error("Missing BeamNG.drive installation directory (provide with --install-path)");
+        lowExit(8);
     }
     
-    std::filesystem::path gamePath(userPath);
+    // Remove trailing slash if present
+    if (!installPath.empty() && (installPath.back() == '/' || installPath.back() == '\\')) {
+        installPath.pop_back();
+    }
+    
+    std::filesystem::path gamePath(installPath);
     
     // Check if the path exists and contains integrity.json
     if (!std::filesystem::exists(gamePath)) {
-        error("The specified path does not exist: " + userPath);
+        error("The specified path does not exist: " + installPath);
         lowExit(8);
         return;
     }
@@ -309,7 +313,7 @@ void LegitimacyCheck() {
     }
     
     GameDir = gamePath.string() + "/";
-    info("Game directory set to: " + GameDir);
+    info("Game directory is: " + GameDir);
 #endif
 }
 std::string CheckVer(const std::filesystem::path& dir) {
