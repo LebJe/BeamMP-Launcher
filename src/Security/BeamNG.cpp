@@ -291,10 +291,10 @@ void LegitimacyCheck() {
         lowExit(8);
     }
     
-    // Remove trailing slash if present
-    if (!installPath.empty() && (installPath.back() == '/' || installPath.back() == '\\')) {
-        installPath.pop_back();
-    }
+    // // Remove trailing slash if present
+    // if (!installPath.empty() && (installPath.back() == '/' || installPath.back() == '\\')) {
+    //     installPath.pop_back();
+    // }
     
     std::filesystem::path gamePath(installPath);
     

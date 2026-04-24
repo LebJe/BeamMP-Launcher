@@ -539,8 +539,10 @@ void PreGame(const beammp_fs_string& GamePath) {
         }
 #if defined(_WIN32)
         std::wstring ZipPath(GetGamePath() / LR"(mods\multiplayer\BeamMP.zip)");
+#elif defined(__APPLE__)
+        std::string ZipPath(GetGamePath() / R"(mods/multiplayer/BeamMP.zip)");
 #elif defined(__linux__) || defined(__APPLE__)
-        // Linux and macOS versions of the game cant handle mods with uppercase names
+        // The Linux version of the game can't handle mods with uppercase names
         std::string ZipPath(GetGamePath() / R"(mods/multiplayer/beammp.zip)");
 #endif
 
